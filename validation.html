@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Angular Validation</title>
+	 <script src="angular/angular.min.js"></script>
+	 <script src="angular/ui-bootstrap.min.js"></script>
+	 <link rel="stylesheet" href="angular/bootstrap.css">
+	 <script>
+	 	var app= angular.module("myApp",['ui.bootstrap']);
+	 	app.controller("myCtrl" ,function($scope,$http){
+	 		$scope.todaydate = function() {
+			    $scope.dt = new Date();
+			  };
+			  $scope.todaydate();
+
+			  $scope.clear = function() {
+			    $scope.dt = null;
+			  };
+
+			  $scope.options = {
+			    customClass: getDayClass,
+			    minDate: new Date(),
+			    showWeeks: true
+			  };
+
+			  // Disable weekend selection
+			  function disabled(data) {
+			    var date = data.date,
+			      mode = data.mode;
+			    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+			  }
+
+			  $scope.toggleMin = function() {
+			    $scope.options.minDate = $scope.options.minDate ? null : new Date();
+			  };
+
+			  $scope.toggleMin();
+
+			  $scope.setDate = function(year, month, day) {
+			    $scope.dt = new Date(year, month, day);
+			  };
+
+			  var tomorrow = new Date();
+			  tomorrow.setDate(tomorrow.getDate() + 1);
+			  var afterTomorrow = new Date(tomorrow);
+			  afterTomorrow.setDate(tomorrow.getDate() + 1);
+			  $scope.events = [
+			    {
+			      date: tomorrow,
+			      status: 'full'
+			    },
+			    {
+			      date: afterTomorrow,
+			      status: 'partially'
+			    }
+			  ];
+
+			  function getDayClass(data) {
+			    var date = data.date,
+			      mode = data.mode;
+			    if (mode === 'day') {
+			      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+			      for (var i = 0; i < $scope.events.length; i++) {
+			        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+			        if (dayToCheck === currentDay) {
+			          return $scope.events[i].status;
+			        }
+			      }
+			    }
+
+			    return '';
+			  }
+			  $scope.$watch("dt", function(newValue, oldValue) {
+			    console.log("I've changed : ", newValue);
+			});
+
+			  $scope.today = function() {
+						    $scope.dt1 = new Date();
+						  };
+						  $scope.today();
+
+						  $scope.clear = function() {
+						    $scope.dt1 = null;
+						  };
+
+						  $scope.inlineOptions = {
+						    customClass: getDayClass,
+						    minDate: new Date(),
+						    showWeeks: true
+						  };
+
+						  $scope.dateOptions = {
+						    dateDisabled: disabled,
+						    formatYear: 'yy',
+						    maxDate: new Date(2020, 5, 22),
+						    minDate: new Date(),
+						    startingDay: 1
+						  };
+
+						  // Disable weekend selection
+						  function disabled(data) {
+						    var date = data.date,
+						      mode = data.mode;
+						    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+						  }
+
+						  $scope.toggleMin = function() {
+						    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+						    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+						  };
+
+						  $scope.toggleMin();
+
+						  $scope.open1 = function() {
+						    $scope.popup1.opened = true;
+						  };
+
+						  $scope.open2 = function() {
+						    $scope.popup2.opened = true;
+						  };
+
+						  $scope.setDate = function(year, month, day) {
+						    $scope.dt1 = new Date(year, month, day);
+						  };
+
+						  $scope.formats = ['shortDate'];
+						  $scope.format = $scope.formats[0];
+						  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+						  $scope.popup1 = {
+						    opened: false
+						  };
+
+						  $scope.popup2 = {
+						    opened: false
+						  };
+
+						  var tomorrow = new Date();
+						  tomorrow.setDate(tomorrow.getDate() + 1);
+						  var afterTomorrow = new Date();
+						  afterTomorrow.setDate(tomorrow.getDate() + 1);
+						  $scope.events = [
+						    {
+						      date: tomorrow,
+						      status: 'full'
+						    },
+						    {
+						      date: afterTomorrow,
+						      status: 'partially'
+						    }
+						  ];
+
+						  function getDayClass(data) {
+						    var date = data.date,
+						      mode = data.mode;
+						    if (mode === 'day') {
+						      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+						      for (var i = 0; i < $scope.events.length; i++) {
+						        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+						        if (dayToCheck === currentDay) {
+						          return $scope.events[i].status;
+						        }
+						      }
+						    }
+
+						    return '';
+						  }
+						  $scope.today = function() {
+						    $scope.dt2 = new Date();
+						  };
+						  $scope.today();
+
+						  $scope.clear = function() {
+						    $scope.dt2 = null;
+						  };
+
+						  $scope.inlineOptions = {
+						    customClass: getDayClass,
+						    minDate: new Date(),
+						    showWeeks: true
+						  };
+
+						  $scope.dateOptions = {
+						    dateDisabled: disabled,
+						    formatYear: 'yy',
+						    maxDate: new Date(2020, 5, 22),
+						    minDate: new Date(),
+						    startingDay: 1
+						  };
+
+						  // Disable weekend selection
+						  function disabled(data) {
+						    var date = data.date,
+						      mode = data.mode;
+						    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+						  }
+
+						  $scope.toggleMin = function() {
+						    $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+						    $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+						  };
+
+						  $scope.toggleMin();
+
+						  $scope.open2 = function() {
+						    $scope.popup2.opened = true;
+						  };
+
+						  $scope.open2 = function() {
+						    $scope.popup2.opened = true;
+						  };
+
+						  $scope.setDate = function(year, month, day) {
+						    $scope.dt2 = new Date(year, month, day);
+						  };
+
+						  $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+						  $scope.format = $scope.formats[0];
+						  $scope.altInputFormats = ['M!/d!/yyyy'];
+
+						  $scope.popup1 = {
+						    opened: false
+						  };
+
+						  $scope.popup2 = {
+						    opened: false
+						  };
+
+						  var tomorrow = new Date();
+						  tomorrow.setDate(tomorrow.getDate() + 1);
+						  var afterTomorrow = new Date();
+						  afterTomorrow.setDate(tomorrow.getDate() + 1);
+						  $scope.events = [
+						    {
+						      date: tomorrow,
+						      status: 'full'
+						    },
+						    {
+						      date: afterTomorrow,
+						      status: 'partially'
+						    }
+						  ];
+
+						  function getDayClass(data) {
+						    var date = data.date,
+						      mode = data.mode;
+						    if (mode === 'day') {
+						      var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+						      for (var i = 0; i < $scope.events.length; i++) {
+						        var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+						        if (dayToCheck === currentDay) {
+						          return $scope.events[i].status;
+						        }
+						      }
+						    }
+
+						    return '';
+						  }
+	 		$scope.user={};
+	 		$scope.save= function (myFrm){
+		 		var dt1= new Date($scope.dt1);
+				var fulldate = dt1.getFullYear() + "-" + (dt1.getMonth() + 1) + "-" + dt1.getDate();
+				console.log(fulldate);
+				var dt2= new Date($scope.dt2);
+				var fulldate1 = dt2.getFullYear() + "-" + (dt2.getMonth() + 1) + "-" + dt2.getDate();
+				console.log(fulldate1);
+
+	 			if(myFrm.$valid){
+	 				$http({
+	 					method:'post',
+	 					url:'http://localhost/angularphp/api/user1.php',
+	 					data:$scope.user
+	 				}).then(function(res){
+
+	 					console.log ("successfully inserted");
+	 				})
+	 			}
+	 			else{
+	 				alert("please enter field properly")
+	 			}
+	 		}
+	 	$http({
+        method : "GET",
+        url : "../search.php?date="+fulldate,
+        dataType:"JSON",
+        data:{date:fulldate}
+    }).then(function mySucces(response) {
+        console.log(response);
+        if(response.data.status == 'success')
+        {
+        	console.log($scope.msg);
+        	$scope.myWelcome = response.data;
+		$scope.msg ="";
+        }
+        else{
+        	$scope.msg = response.data.msg;
+        }
+    }, function myError(response) {
+        $scope.myWelcome = response.statusText;
+    });
+	};
+	 	});
+	 </script>
+	 <style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+  </style>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+<div class="container-full">
+	<div class="row well">
+	<div class="col-md-8">
+		
+		<div class="form-group">
+					 <pre>Selected date is: <em>{{dt | date }}</em></pre>
+						 <h4>Inline</h4>
+					    <div style="display:inline-block; min-height:290px;">
+					      <div uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></div>
+					    </div>
+				</div>
+				
+		</div>
+		<div class="col-md-4">
+		{{user}}
+			<div class="panel panel-default">
+				<div class="panel-heading">Add Event</div>
+				<div class="panel-body">
+					<form name="myFrm" ng-submit="save(myFrm)" novalidate>
+						<div class="form-group">
+							<label class="control-label">Name : </label>
+							<input type="text" class="form-control" ng-model="user.name" name="name" required>
+							<span ng-if="myFrm.name.$touched ||myFrm.$submitted">
+								<span ng-if="myFrm.name.$error.required">
+									Please enter your name
+								</span>
+							</span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Address : </label>
+							<input type="text" class="form-control" ng-model="user.address" name="address" required>
+							<span ng-if="myFrm.address.$touched || myFrm.$submitted">
+								<span ng-if="myFrm.address.$error.required">
+									Please enter your address
+								</span>
+							</span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Contact : </label>
+							<input type="number" class="form-control" ng-model="user.contact" name="contact" required>
+							<span ng-if="myFrm.contact.$touched || myFrm.$submitted">
+								<span ng-if="myFrm.contact.$error.required">
+									Please enter Contact
+								</span>
+							</span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">class : </label>
+							<input type="text" class="form-control" ng-model="user.classname" name="classname" required>
+							<span ng-if="myFrm.classname.$touched || myFrm.$submitted">
+								<span ng-if="myFrm.classname.$error.required">
+									Please enter class
+								</span>
+							</span>
+						</div>
+						<div class="form-group">
+							<div class="col-md-6">
+					        <p class="input-group">
+					          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="user.dt1" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+					          <span class="input-group-btn">
+					            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+					          </span>
+					        </p>
+					        </div>
+					        <div class="col-md-6">
+					        <p class="input-group">
+					          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="user.dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+					          <span class="input-group-btn">
+					            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+					          </span>
+					        </p>
+					        </div>
+					    </div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-primary" value="submit">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
